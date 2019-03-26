@@ -58,7 +58,11 @@ function searchRecipe() {
     // also use to save 'query' value into firebase for search history
     var query = $('#search-mini').val().trim();
     $.ajax({
-        url: "https://api.edamam.com/search?q="+query+"&app_id=4063fe6a&app_key=edd561481c6b54dfe7cf0a48333a3189",
+        url: "https://developers.zomato.com/api/v2.1/search?q="+query,
+        // url: "https://api.edamam.com/search?q="+query+"&app_id=4063fe6a&app_key=edd561481c6b54dfe7cf0a48333a3189",
+        beforeSend: function (xhr) {
+            xhr.setRequestHeader('user-key',
+                '283b679d86b81c25de7209040e9f2b72');},
         method: "GET"
     })
         // AJAX function 
@@ -68,11 +72,11 @@ function searchRecipe() {
             //get recipe api results
             //display results using jquery using #recipe-display
 
-    //   database.ref().push({
-    //   query: query,
-    //     recipeUrl: recipeUrl,
+            //   database.ref().push({
+            //   query: query,
+            //     recipeUrl: recipeUrl,
 
-    });
+        });
 }
 //each time another search value is added this will send the name and url to firebase then post in
 //the search-history-display area
