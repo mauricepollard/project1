@@ -1,81 +1,78 @@
-<!DOCTYPE html>
-<html lang="en">
+<html>
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-  <link rel="stylesheet" href="assets/css/styles.css" media="screen">
+    <title>
 
-  <title>Grocery and Recipe</title>
-
+    </title>
+    <link rel="stylesheet" href="assets/css/reset.css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+    <link rel="stylesheet" href="assets/css/styles.css" />
 </head>
 
 <body>
-<!--Start Header-->
-    <header><h1>Whatevername - Grocery and Reccipe</h1>
-    </header>
-<!--End Header-->
+    <!-- header -->
+    <nav class="navbar navbar-dark bg-primary">
+        <a class="navbar-brand" href="#">Team Project 1</a>
+    </nav>
+
+<!-- end header -->
+
+<!-- container -->
+    <div class="container">
+        <div class="row">
+            <div class="col-8"></div>
+
+            <!-- Search area -->
+            <Section class="input-area">
+                <div><!-- to-do add recipe search via APi  -->
+                    <input type="search" name="search-mini" placeholder="Enter ingredient for recipe" id="search-mini" value="" data-mini="true" />
+                    <input type="button" id="search-button"  value="search" onclick="searchRecipe()">
+                </div>
+                <div id="recipe-display">
+
+                </div>
+            </Section>
+            <!-- end search area -->
+
+            <!-- sidebar display area -->
+            <div id="display-right" class="col-4">
+                <!-- added dynamic text via NY Times Api-->
+
+                <div id="search-history-display">
+                    <h4>Search History</h4>
+                    <hr>
+                    <!-- display firebase search history results here -->
+
+                    <hr>
+                    <h4>Current Events</h4>
+                </div>
+            </div>
+            <!-- end sidebar display area -->
+            
 
 
-<!--Start Follow us-->
-    <div class="Follow block">Follow us <span>Facebook</span> <span>Instagrma</span> <span>Twitter</span> <span>Pinterest.</span></div>
-<!--End Follow us-->
-
-
- <!-- Start Navbar: Brand Logo, Nav, Serch-bar, Sign-in display -->
-    <div class="logo nav serch-bar sign-in">
-     <div class="container"></div>
-        <span id="logo">LOGO</span> 
-        <span id="browse">--Browse--</span> 
-        <span id="serch-bar">--------Serch Bar----</span>
-        <span id="profile">Creat Profile</span>
-    </div>
- <!-- End of navbar -->
-
-
-<!-- Start "Round-Food-Pic" Round-shape category container -->
-    <div class="Round-shape category">
+<!-- end container -->
         </div>
 
-<!-- End of "Round-Food-Pic" container -->
-
-
-<!--Start Recipe from Yummy API - include: Comment / Rating-->
-    <div>Recipe</div>
-
-<!--End Recipe - include: Comment / Rating-->
-
-
-<!--Start Ingredients from Wal Mart API - include: Checkbox-->
-    <div>Ingredients</div>
-
-<!--End Ingredients from Wal Mart API - include: Checkbox-->
-
-
-<!--Start Serch History-->
-    <div>Serching History</div>
-<!--End Serch History-->
 
 
 
-<!-- Start of footer -->
 
-    <footer class="footer">
-        <div class="two-toned-footer-color"></div>
-        <p class="text-muted text-muted-footer text-center">
-          &copy; Copyright
-        </p>
-    </footer>
-
-<!-- End of footer -->
-
-<!-- jQuery CDN -->
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
-<!-- Bootstrap CDN -->
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-
-    
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/5.9.1/firebase.js"></script>
+        <script src="assets/javascript/javascript.js"></script>
 </body>
+
 </html>
