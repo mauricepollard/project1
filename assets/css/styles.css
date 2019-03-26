@@ -1,0 +1,27 @@
+/* .col-4{
+    border: solid 1px lightgrey;
+    border-radius: 15px;
+}
+.col-8{
+    border: solid 1px lightgrey;
+    border-radius: 15px;
+} */
+.input-area{
+width:66%;
+border-right: solid 2px lightgray;
+padding-right: 5px;
+}
+
+/* #sidebar-display{
+width: 33%;
+} */
+.bg-primary {
+    background-color: #007bff!important;
+    margin-bottom: 10px; 
+}
+
+.navbar-dark .navbar-brand {
+    color: #fff;
+    font-weight: 200;
+   
+}
