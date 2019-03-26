@@ -58,12 +58,12 @@ function searchRecipe() {
     // also use to save 'query' value into firebase for search history
     var query = $('#search-mini').val().trim();
     $.ajax({
-        url: "https://api.nytimes.com/",
+        url: "https://api.edamam.com/search?q="+query+"&app_id=4063fe6a&app_key=edd561481c6b54dfe7cf0a48333a3189",
         method: "GET"
     })
         // AJAX function 
         .then(function (ajaxRecipeResponse) {
-
+            console.log(ajaxRecipeResponse)
 
             //get recipe api results
             //display results using jquery using #recipe-display
