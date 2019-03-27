@@ -20,6 +20,7 @@ function searchRecipe() {
 
     //use to capture textbox value to put inside of APi query url
 
+
     // also use to save 'query' value into firebase for search history
     var query = $('#search-mini').val().trim();
     $.ajax({
@@ -31,9 +32,21 @@ function searchRecipe() {
         method: "GET"
     })
         // AJAX function 
-        .then(function (ajaxRestaurantResponse) {
-            console.log(ajaxRestaurantResponse)
-
+        .then(function (ajaxRecipeResponse) {
+            
+            
+            for(i=0;i<5;i++)
+            {
+            var re=ajaxRecipeResponse.restaurants[i];
+            console.log(re);
+            var loc=ajaxRecipeResponse.restaurants[i].restaurant.location.address;
+            console.log(loc);
+            var name=ajaxRecipeResponse.restaurants[i].restaurant.name;
+            console.log(name);
+            
+            $("#recipe-display").text(name);
+            }
+            
             //get recipe api results
             //display results using jquery using #recipe-display
 
