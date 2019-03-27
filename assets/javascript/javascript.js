@@ -1,39 +1,4 @@
 
-//Ny Times Feed
-$.ajax({
-    url: "https://api.nytimes.com/svc/mostpopular/v2/viewed/1.json?api-key=T93gBpi7HbQuDsZB4efsVB1vWF2P51xY",
-    method: "GET"
-})
-    // AJAX function 
-    .then(function (ajaxTimesResponse) {
-        var p1 = $("<p>");
-        var a1 = $("<a>");
-
-        var p2 = $("<p>");
-        var a2 = $("<a>");
-
-        var p3 = $("<p>");
-        var a3 = $("<a>");
-
-        a1.attr("href", ajaxTimesResponse.results[0].url).text(ajaxTimesResponse.results[0].title);
-        p1.text(ajaxTimesResponse.results[0].byline);
-
-        a2.attr("href", ajaxTimesResponse.results[1].url).text(ajaxTimesResponse.results[1].title);
-        p2.text(ajaxTimesResponse.results[1].byline);
-
-        a3.attr("href", ajaxTimesResponse.results[2].url).text(ajaxTimesResponse.results[2].title);
-        p3.text(ajaxTimesResponse.results[2].byline);
-
-        $("#display-right").append(a1);
-        $("#display-right").append(p1);
-
-        $("#display-right").append(a2);
-        $("#display-right").append(p2);
-
-        $("#display-right").append(a3);
-        $("#display-right").append(p3);
-    });
-//End Ny Times Feed
 
 //firebase connection
 
@@ -59,15 +24,15 @@ function searchRecipe() {
     var query = $('#search-mini').val().trim();
     $.ajax({
         url: "https://developers.zomato.com/api/v2.1/search?q="+query,
-        // url: "https://api.edamam.com/search?q="+query+"&app_id=4063fe6a&app_key=edd561481c6b54dfe7cf0a48333a3189",
+        // 
         beforeSend: function (xhr) {
             xhr.setRequestHeader('user-key',
                 '283b679d86b81c25de7209040e9f2b72');},
         method: "GET"
     })
         // AJAX function 
-        .then(function (ajaxRecipeResponse) {
-            console.log(ajaxRecipeResponse)
+        .then(function (ajaxRestaurantResponse) {
+            console.log(ajaxRestaurantResponse)
 
             //get recipe api results
             //display results using jquery using #recipe-display
@@ -77,6 +42,49 @@ function searchRecipe() {
             //     recipeUrl: recipeUrl,
 
         });
+
+        function displayIngredient(target="",index,data){
+            var newIngredient  = $("<p>");
+            newIngredient.text(data);
+            $(target).append(newIngredient);
+
+        }
+
+        //Recipe api call
+$.ajax({
+    url: "https://api.edamam.com/search?q=" + query +"&app_id=4063fe6a&app_key=edd561481c6b54dfe7cf0a48333a3189",
+    method: "GET"
+})
+    // AJAX function 
+    .then(function (ajaxRecipeResponse) {
+        
+        var p1 = $("<p>");
+        var a1 = $("<a>");
+       
+
+        $("#display-right").append(a1);
+        $("#display-right").append(p1);
+        
+        a1.attr("href", ajaxRecipeResponse.hits[0].recipe.url).text(ajaxRecipeResponse.hits[0].recipe.label);
+        p1.text("Calories " + ajaxRecipeResponse.hits[0].recipe.calories);
+        
+        
+        for (var i = 0; i <ajaxRecipeResponse.hits[0].recipe.ingredients.length; i++){
+
+
+
+
+        displayIngredient ("#display-right",i,ajaxRecipeResponse.hits[0].recipe.ingredients[i].text)
+        }
+    
+
+        
+        
+
+       
+    });
+
+
 }
 //each time another search value is added this will send the name and url to firebase then post in
 //the search-history-display area
