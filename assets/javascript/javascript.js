@@ -3,6 +3,7 @@ var restName = '';
           var restPrice = 0;
          var restRating = '';
      var RestaurantLink = '';
+
 function searchRecipe() {
     event.preventDefault();
 
@@ -29,7 +30,7 @@ function searchRecipe() {
 
         })
         .catch(function(error){
-         console.log(error);
+        
         })
 
         
@@ -61,7 +62,7 @@ function searchRecipe() {
                 });
             }
         }
-
+        
     }
 
     function displayIngredient(target = "", index, data) {
@@ -106,7 +107,8 @@ function searchRecipe() {
         });
 
 
-}
+        $("input:text").val("");
+    }
 
 //firebase connection
 
@@ -127,8 +129,14 @@ var database = firebase.database();
 //each time another search value is added this will send the name and url to firebase then post in
 //the search-history-display area
 database.ref().on("child_added", function (snapshot) {
+    var snap = $("<a>");
+    snap.attr("href", snapshot.val().RestaurantLink).text(snapshot.val().restName);
+            
 
 
+
+$("#history-display").append(snap);
+$("#history-display").append("<br>");
 
 });
 function fnLink(elem) {
