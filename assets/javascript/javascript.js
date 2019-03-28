@@ -31,31 +31,38 @@ function searchRecipe() {
                 '283b679d86b81c25de7209040e9f2b72');},
         method: "GET"
     })
-        // AJAX function 
-        .then(function (ajaxRecipeResponse) {
-            
-            
-            for(i=0;i<5;i++)
-            {
-            var re=ajaxRecipeResponse.restaurants[i];
-            console.log(re);
-            var loc=ajaxRecipeResponse.restaurants[i].restaurant.location.address;
-            console.log(loc);
-            var name=ajaxRecipeResponse.restaurants[i].restaurant.name;
-            console.log(name);
-            
-            $("#recipe-display").text(name);
-            }
-            
-            //get recipe api results
-            //display results using jquery using #recipe-display
-
-            //   database.ref().push({
-            //   query: query,
-            //     recipeUrl: recipeUrl,
+        // Zomato API
+        .then(function(ajaxRestaurantResponse) {
+           
+        display(ajaxRestaurantResponse);
+      
+          
 
         });
-
+       function display(ajaxRestaurantResponse){
+           
+           var s="";
+           for(i=0;i<5;i++){
+           
+           var restName=ajaxRestaurantResponse.restaurants[i].restaurant.name;
+           var restAddress=ajaxRestaurantResponse.restaurants[i].restaurant.location.address;
+           var restPrice=ajaxRestaurantResponse.restaurants[i].restaurant.average_cost_for_two;
+           var restRating=ajaxRestaurantResponse.restaurants[i].restaurant.user_rating.rating_text;
+           var RestaurantLink=ajaxRestaurantResponse.restaurants[i].restaurant.url;
+           
+          s='<div class="displayResturant" onClick="fnLink(this)">';
+        
+              s+="<p>Restaurant name:"+restName+"</p>";
+              s+="<p>Adress:"+restAddress+"</p>";
+              s+="<p>Price:"+restPrice+"</p>";
+              s+="<p>Rating:"+restRating+"</p>";
+             s+="<input type='hidden' id='hiddenRest' value="+RestaurantLink+">";
+              s+='</div>';
+              $("#recipe-display").append(s);
+            }
+        
+}
+   
         function displayIngredient(target="",index,data){
             var newIngredient  = $("<p>");
             newIngredient.text(data);
@@ -106,3 +113,8 @@ database.ref().on("child_added", function (snapshot) {
 
 
 });
+function fnLink(elem){
+    
+    var Restaurentdirect=$("#hiddenRest").val();
+    window.location.href = Restaurentdirect;
+}
