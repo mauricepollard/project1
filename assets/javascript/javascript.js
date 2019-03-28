@@ -53,6 +53,13 @@ function searchRecipe() {
             s += "<input type='hidden' id='hiddenRest' value=" + RestaurantLink + ">";
             s += '</div>';
             $("#recipe-display").append(s);
+            if(i === 0){
+                console.log("error" +restName);
+                database.ref().push({
+                    restName:restName,
+                    RestaurantLink:RestaurantLink
+                });
+            }
         }
 
     }
@@ -115,11 +122,7 @@ var config = {
 firebase.initializeApp(config);
 
 var database = firebase.database();
-console.log("error" +restName);
-database.ref().push({
-    restName:restName,
-    RestaurantLink:RestaurantLink
-});
+
 
 //each time another search value is added this will send the name and url to firebase then post in
 //the search-history-display area
