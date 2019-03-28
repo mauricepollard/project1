@@ -25,3 +25,10 @@ width: 33%;
     font-weight: 200;
    
 }
+.displayResturant{
+    border:1px solid blue;
+    margin-bottom:10px;
+    padding-left:10px;
+
+}
+.displayResturant:hover{cursor: pointer;background-color: 	#007bff;color:white;}
