@@ -6,6 +6,7 @@ var RestaurantLink = '';
 var searchNumber = 0;
 var recipeDisplayID;
 var restaurantDisplayId;
+var restaurantDirect = "";
 
 $("#search-button").on("click", searchRecipe)
 function createNewCardDeck() {
@@ -80,13 +81,13 @@ function searchRecipe() {
             restaurantDisplayId = "#restaurant-display" + searchNumber
             console.log(restaurantDisplayId)
             $(restaurantDisplayId).append(s);
-            if (i === 0) {
-                console.log("error" + restName);
-                database.ref().push({
-                    restName: restName,
-                    RestaurantLink: RestaurantLink
-                });
-            }
+            // if (i === 0) {
+            //     console.log("error" + restName);
+            //     database.ref().push({
+            //         restName: restName,
+            //         RestaurantLink: RestaurantLink
+            //     });
+            // }
         }
 
     }
@@ -102,16 +103,17 @@ function searchRecipe() {
             console.log(ajaxRecipeResponse)
 
             var a1 = $("<a>");
+            a1.attr("data-recipeName", ajaxRecipeResponse.hits[0].recipe.label)
             var img1 = $("<img>")
             var p1 = $("<p>");
             var ingredientUl = $("<ul>").attr("class", "list-group list-group-flush")
 
-            a1.attr("href", ajaxRecipeResponse.hits[0].recipe.url).html("<h5>" + ajaxRecipeResponse.hits[0].recipe.label + "</h5>");
-            a1.attr("target","_blank")
+            a1.attr("href", ajaxRecipeResponse.hits[0].recipe.url).html("<h5>"+ajaxRecipeResponse.hits[0].recipe.label+"</h5>");
+            a1.attr("target", "_blank")
             p1.text("Calories " + parseInt(ajaxRecipeResponse.hits[0].recipe.calories));
             img1.attr("src", ajaxRecipeResponse.hits[0].recipe.image)
 
-            a1.attr("class", "card-title")
+            a1.attr("class", "card-title displayRecipe")
             p1.attr("class", "card-text")
             img1.attr("class", "card-img-top")
 
@@ -153,15 +155,63 @@ var database = firebase.database();
 
 //each time another search value is added this will send the name and url to firebase then post in
 //the search-history-display area
-database.ref().on("child_added", function (snapshot) {
-    var snap = $("<a>");
-    snap.attr("href", snapshot.val().RestaurantLink).text(snapshot.val().restName);
-    $("#history-display").append(snap);
+database.ref().limitToLast(5).on("child_added", function (snapshot) {
+    var fbType = snapshot.val().type
+    var fbRestLink = snapshot.val().restLink
+    var fbRestName = snapshot.val().restName
+    var aTag = $("<a>").attr("target", "_blank");
+    var fbRecipeName = snapshot.val().recipeName
+    var fbRecipeLink = snapshot.val().recipeLink
+
+    if (fbType === "Restaurant") {
+        aTag.attr("href", fbRestLink).text("Restaurant: " + fbRestName);
+    }
+
+    if (fbType === "Recipe") {
+        aTag.attr("href", fbRecipeLink).text("Recipe: " + fbRecipeName);
+    }
+
+
+    $("#history-display").append(aTag);
     $("#history-display").append("<br>");
+
 
 });
 function fnLink(elem) {
 
-    var restaurantDirect = $("#hiddenRest").val();
+    restaurantDirect = $("#hiddenRest").val();
     window.open(restaurantDirect, "_blank")
+
+    // var aHistory = $("<a>");
+    // aHistory.attr("href", restaurantDirect).html("<h5>" + query + "</h5>");
+    // aHistory.attr("target", "_blank")
+
+    // $("#history-display").append(aHistory);
 }
+
+$(document).on("click", ".displayRestaurant", function () {
+    var clickedRestName = $(this).attr("data-restName")
+    var clickedRestLink = $(this).attr("data-restLink")
+
+    database.ref().push({
+        type: "Restaurant",
+        restName: clickedRestName,
+        restLink: clickedRestLink,
+        recipeName: "",
+        recipeLink: ""
+    });
+})
+
+$(document).on("click", ".displayRecipe", function () {
+    console.log("helooooo")
+    var clickedRecipeName = $(this).attr("data-recipeName")
+    var clickedRecipeLink = $(this).attr("href")
+
+    database.ref().push({
+        type: "Recipe",
+        restName: "",
+        restLink: "",
+        recipeName: clickedRecipeName,
+        recipeLink: clickedRecipeLink
+    });
+})
