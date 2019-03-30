@@ -8,6 +8,16 @@ var recipeDisplayID;
 var restaurantDisplayId;
 var restaurantDirect = "";
 
+let lat;
+let long;
+
+navigator.geolocation.getCurrentPosition(function (position) {
+    lat = position.coords.latitude;
+    long = position.coords.longitude;
+    console.log(lat)
+    console.log(long)
+})
+
 $("#search-button").on("click", searchRecipe)
 function createNewCardDeck() {
     searchNumber++
@@ -40,9 +50,11 @@ function searchRecipe() {
     // $("#search-button").on("click", createNewCardDeck)
     createNewCardDeck()
 
+
+
     // restaurant API call
     $.ajax({
-        url: "https://developers.zomato.com/api/v2.1/search?q=" + query,
+        url: "https://developers.zomato.com/api/v2.1/search?q=" + query + "&lat=" + lat + "&lon=" + long + "&radius=30000",
         beforeSend: function (xhr) {
             xhr.setRequestHeader('user-key',
                 '283b679d86b81c25de7209040e9f2b72');
@@ -108,7 +120,7 @@ function searchRecipe() {
             var p1 = $("<p>");
             var ingredientUl = $("<ul>").attr("class", "list-group list-group-flush")
 
-            a1.attr("href", ajaxRecipeResponse.hits[0].recipe.url).html("<h5>"+ajaxRecipeResponse.hits[0].recipe.label+"</h5>");
+            a1.attr("href", ajaxRecipeResponse.hits[0].recipe.url).html("<h5>" + ajaxRecipeResponse.hits[0].recipe.label + "</h5>");
             a1.attr("target", "_blank")
             p1.text("Calories " + parseInt(ajaxRecipeResponse.hits[0].recipe.calories));
             img1.attr("src", ajaxRecipeResponse.hits[0].recipe.image)
@@ -142,12 +154,12 @@ function searchRecipe() {
 
 // Initialize Firebase
 var config = {
-    apiKey: "AIzaSyBQTrz-e57cpa5Kzw_ayDShc64yAWicnzQ",
-    authDomain: "team-project-1-248b4.firebaseapp.com",
-    databaseURL: "https://team-project-1-248b4.firebaseio.com",
-    projectId: "team-project-1-248b4",
-    storageBucket: "team-project-1-248b4.appspot.com",
-    messagingSenderId: "230125627631"
+    apiKey: "AIzaSyBEPjx4MSjK1qr0fZZhuOPt7KNtjLYhKIM",
+    authDomain: "teamproject1-f7bea.firebaseapp.com",
+    databaseURL: "https://teamproject1-f7bea.firebaseio.com",
+    projectId: "teamproject1-f7bea",
+    storageBucket: "teamproject1-f7bea.appspot.com",
+    messagingSenderId: "598129366805"
 };
 firebase.initializeApp(config);
 
@@ -155,11 +167,11 @@ var database = firebase.database();
 
 //each time another search value is added this will send the name and url to firebase then post in
 //the search-history-display area
-database.ref().limitToLast(5).on("child_added", function (snapshot) {
+database.ref().orderByChild("timeAdded").limitToLast(5).on("child_added", function (snapshot) {
     var fbType = snapshot.val().type
     var fbRestLink = snapshot.val().restLink
     var fbRestName = snapshot.val().restName
-    var aTag = $("<a>").attr("target", "_blank");
+    var aTag = $("<a>").attr("target", "_blank").attr("class", "searchHistory");
     var fbRecipeName = snapshot.val().recipeName
     var fbRecipeLink = snapshot.val().recipeLink
 
@@ -194,6 +206,7 @@ $(document).on("click", ".displayRestaurant", function () {
     var clickedRestLink = $(this).attr("data-restLink")
 
     database.ref().push({
+        timeAdded: firebase.database.ServerValue.TIMESTAMP,
         type: "Restaurant",
         restName: clickedRestName,
         restLink: clickedRestLink,
@@ -203,11 +216,11 @@ $(document).on("click", ".displayRestaurant", function () {
 })
 
 $(document).on("click", ".displayRecipe", function () {
-    console.log("helooooo")
     var clickedRecipeName = $(this).attr("data-recipeName")
     var clickedRecipeLink = $(this).attr("href")
 
     database.ref().push({
+        timeAdded: firebase.database.ServerValue.TIMESTAMP,
         type: "Recipe",
         restName: "",
         restLink: "",

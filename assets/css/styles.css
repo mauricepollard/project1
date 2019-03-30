@@ -36,6 +36,10 @@ width: 33%;
 
 .displayRestaurant:hover{cursor: pointer;background-color: 	#007bff;color:white;}
 
+.searchHistory {
+    margin-bottom: 10px;
+    display: inline-block;
+}
 
 /* ------------------------------------------- */
 
