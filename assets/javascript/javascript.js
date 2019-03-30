@@ -161,7 +161,9 @@ database.ref().on("child_added", function (snapshot) {
 
 });
 function fnLink(elem) {
-
+   console.log(elem);
     var restaurantDirect = $("#hiddenRest").val();
     window.open(restaurantDirect, "_blank")
+    var restaurantName=$(elem).attr("data-restname",value);
+    console.log("resturant"+restaurantName);
 }
