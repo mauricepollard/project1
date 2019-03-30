@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>MealHub</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="assets/css/reset.css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+    <link rel="stylesheet" href="assets/css/styles.css" />
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-9">
+                <div class="row px-2">
+                    <div class="jumbotron mb-3" style="width: 100%;">
+                        <h1 class="display-4">Cook, or Eat out?</h1>
+                        <p class="lead">You can simply compare the recipe to cook at home and restaurant to dine out.
+                            Yay!</p>
+                        <hr class="my-4">
+                        <p class="lead">
+                            <input type="search" name="search-mini" placeholder="Enter ingredient for recipe"
+                                id="search-mini" value="" data-mini="true" />
+                            <input type="button" id="search-button" value="search">
+                        </p>
+
+                    </div>
+                </div>
+                <div id="main-container"></div>
+
+
+                <!-- <div class="row card-deck">
+
+                    <div class="card border-primary mx-2 mb-3" style="max-width: 100%;">
+                        <div class="card-header">Recipe</div>
+                        <div class="card-body text-primary" id="recipe-display"></div>
+                    </div>
+
+                    <div class="card border-primary mx-2 mb-3" style="max-width: 100%;">
+                        <div class="card-header">Restaurant</div>
+                        <div class="card-body text-primary" id="restaurant-display"></div>
+                    </div>
+
+                </div> -->
+
+            </div>
+            <div class="col-md-3 p-1 m-0" id="display-right">
+                <h2>Search History</h2>
+                <hr>
+                <div id="history-display"></div>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.9.1/firebase.js"></script>
+    <script src="assets/javascript/javascript.js"></script>
+
+
+</body>
+
+</html>
