@@ -1,3 +1,4 @@
+$("#labVal").hide();
 var restName = '';
         var restAddress ='';
           var restPrice = 0;
@@ -5,6 +6,13 @@ var restName = '';
      var RestaurantLink = '';
 
 function searchRecipe() {
+   var search= validation();
+   console.log(search);
+   if(search==="true")
+   {
+       $("#labVal").show();
+   }
+   $("#labVal").show();
     event.preventDefault();
 
     //use to capture textbox value to put inside of APi query url
@@ -110,6 +118,7 @@ function searchRecipe() {
         $("input:text").val("");
     }
 
+
 //firebase connection
 
 // Initialize Firebase
@@ -143,4 +152,16 @@ function fnLink(elem) {
 
     var Restaurentdirect = $("#hiddenRest").val();
     window.location.href = Restaurentdirect;
+}
+function validation()
+{
+ var search= $("#search-mini").val().length;
+ console.log(search);
+ if(search=="0"){
+     return true;
+ }
+ else{
+     return false;
+ }
+ 
 }
