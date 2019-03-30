@@ -1,3 +1,6 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
 /* .col-4{
     border: solid 1px lightgrey;
     border-radius: 15px;
@@ -7,7 +10,7 @@
     border-radius: 15px;
 } */
 .input-area{
-width:66%;
+width:100%;
 border-right: solid 2px lightgray;
 padding-right: 5px;
 }
@@ -25,10 +28,17 @@ width: 33%;
     font-weight: 200;
    
 }
-.displayResturant{
-    border:1px solid blue;
-    margin-bottom:10px;
-    padding-left:10px;
-
+.displayRestaurant{
+    border-bottom: 1px solid lightgray;
+    /* margin-bottom:10px;
+    padding-left:10px; */
 }
-.displayResturant:hover{cursor: pointer;background-color: 	#007bff;color:white;}
+
+.displayRestaurant:hover{cursor: pointer;background-color: 	#007bff;color:white;}
+
+
+/* ------------------------------------------- */
+
+.card {
+    width: 100%;
+}
