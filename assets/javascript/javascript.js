@@ -8,6 +8,7 @@ var recipeDisplayID;
 var restaurantDisplayId;
 var restaurantDirect = "";
 
+// get the user location
 let lat;
 let long;
 
@@ -18,39 +19,23 @@ navigator.geolocation.getCurrentPosition(function (position) {
     console.log(long)
 })
 
+// STEP1. when user click search button, execute searchRecipe function
 $("#search-button").on("click", searchRecipe)
-function createNewCardDeck() {
-    searchNumber++
-    var cardDeck = $("<div>").attr("class", "row card-deck mb-4")
-    var newCard1 = $("<div>").attr("class", "card border-primary mx-2 mb-3").attr("style", "max-width: 100%;")
-    var cardHeader1 = $("<div>").attr("class", "card-header").text("Recipe")
-    var cardBody1 = $("<div>").attr("class", "card-body text-primary").attr("id", "recipe-display" + searchNumber)
-    newCard1.append(cardHeader1, cardBody1)
 
-    var newCard2 = $("<div>").attr("class", "card border-primary mx-2 mb-3").attr("style", "max-width: 100%;")
-    var cardHeader2 = $("<div>").attr("class", "card-header").text("Restaurant")
-    var cardBody2 = $("<div>").attr("class", "card-body text-primary").attr("id", "restaurant-display" + searchNumber)
-    newCard2.append(cardHeader2, cardBody2)
-
-    cardDeck.append(newCard1, newCard2)
-    $("#main-container").prepend(cardDeck)
-}
 function searchRecipe() {
     event.preventDefault();
 
     //use to capture textbox value to put inside of APi query url
-
     // also use to save 'query' value into firebase for search history
-
     var query = $('#search-mini').val().trim();
+
+    // if user do not input anything, do nothing
     if (query === "") {
         return;
     }
 
-    // $("#search-button").on("click", createNewCardDeck)
+    // Create new card deck
     createNewCardDeck()
-
-
 
     // restaurant API call
     $.ajax({
@@ -82,6 +67,7 @@ function searchRecipe() {
             RestaurantLink = ajaxRestaurantResponse.restaurants[i].restaurant.url;
 
             s = `<div class="displayRestaurant p-2"  data-restName="${restName}" data-restLink="${RestaurantLink}" onClick="fnLink(this)">`;
+            // s = `<div class="displayRestaurant p-2"  data-restName="${restName}" data-restLink="${RestaurantLink}">`;
 
             s += "<h5>Restaurant name: " + restName + "</h5>";
             s += "<p class='py-1 m-0'>Address: " + restAddress + "</p>";
@@ -93,15 +79,7 @@ function searchRecipe() {
             restaurantDisplayId = "#restaurant-display" + searchNumber
             console.log(restaurantDisplayId)
             $(restaurantDisplayId).append(s);
-            // if (i === 0) {
-            //     console.log("error" + restName);
-            //     database.ref().push({
-            //         restName: restName,
-            //         RestaurantLink: RestaurantLink
-            //     });
-            // }
         }
-
     }
 
     //Recipe api call
@@ -147,12 +125,35 @@ function searchRecipe() {
         var newIngredient = $("<li>").attr("class", "list-group-item px-0");
         newIngredient.text(data);
         $(target).append(newIngredient);
-
     }
+
+    // empty input value
     $("input:text").val("");
 }
 
-// Initialize Firebase
+function createNewCardDeck() {
+    searchNumber++
+    var cardDeck = $("<div>").attr("class", "row card-deck mb-4")
+    var newCard1 = $("<div>").attr("class", "card border-primary mx-2 mb-3").attr("style", "max-width: 100%;")
+    var cardHeader1 = $("<div>").attr("class", "card-header").text("Recipe")
+    var cardBody1 = $("<div>").attr("class", "card-body text-primary").attr("id", "recipe-display" + searchNumber)
+    newCard1.append(cardHeader1, cardBody1)
+
+    var newCard2 = $("<div>").attr("class", "card border-primary mx-2 mb-3").attr("style", "max-width: 100%;")
+    var cardHeader2 = $("<div>").attr("class", "card-header").text("Restaurant")
+    var cardBody2 = $("<div>").attr("class", "card-body text-primary").attr("id", "restaurant-display" + searchNumber)
+    newCard2.append(cardHeader2, cardBody2)
+
+    cardDeck.append(newCard1, newCard2)
+    $("#main-container").prepend(cardDeck)
+}
+
+function fnLink(elem) {
+    restaurantDirect = $(elem).attr("data-restLink");
+    window.open(restaurantDirect, "_blank")
+}
+
+// STEP2. Initialize Firebase
 var config = {
     apiKey: "AIzaSyBEPjx4MSjK1qr0fZZhuOPt7KNtjLYhKIM",
     authDomain: "teamproject1-f7bea.firebaseapp.com",
@@ -165,42 +166,7 @@ firebase.initializeApp(config);
 
 var database = firebase.database();
 
-//each time another search value is added this will send the name and url to firebase then post in
-//the search-history-display area
-database.ref().orderByChild("timeAdded").limitToLast(5).on("child_added", function (snapshot) {
-    var fbType = snapshot.val().type
-    var fbRestLink = snapshot.val().restLink
-    var fbRestName = snapshot.val().restName
-    var aTag = $("<a>").attr("target", "_blank").attr("class", "searchHistory");
-    var fbRecipeName = snapshot.val().recipeName
-    var fbRecipeLink = snapshot.val().recipeLink
-
-    if (fbType === "Restaurant") {
-        aTag.attr("href", fbRestLink).text("Restaurant: " + fbRestName);
-    }
-
-    if (fbType === "Recipe") {
-        aTag.attr("href", fbRecipeLink).text("Recipe: " + fbRecipeName);
-    }
-
-
-    $("#history-display").append(aTag);
-    $("#history-display").append("<br>");
-
-
-});
-function fnLink(elem) {
-
-    restaurantDirect = $("#hiddenRest").val();
-    window.open(restaurantDirect, "_blank")
-
-    // var aHistory = $("<a>");
-    // aHistory.attr("href", restaurantDirect).html("<h5>" + query + "</h5>");
-    // aHistory.attr("target", "_blank")
-
-    // $("#history-display").append(aHistory);
-}
-
+// when user click restaurant link, push the information to firebase
 $(document).on("click", ".displayRestaurant", function () {
     var clickedRestName = $(this).attr("data-restName")
     var clickedRestLink = $(this).attr("data-restLink")
@@ -215,6 +181,7 @@ $(document).on("click", ".displayRestaurant", function () {
     });
 })
 
+// when user click recipe link, push the information to firebase
 $(document).on("click", ".displayRecipe", function () {
     var clickedRecipeName = $(this).attr("data-recipeName")
     var clickedRecipeLink = $(this).attr("href")
@@ -228,3 +195,28 @@ $(document).on("click", ".displayRecipe", function () {
         recipeLink: clickedRecipeLink
     });
 })
+
+//each time another search value is added this will send the name and url to firebase then post in
+//the history-display area
+database.ref().orderByChild("timeAdded").limitToLast(5).on("child_added", function (snapshot) {
+    var fbType = snapshot.val().type
+    var fbRestLink = snapshot.val().restLink
+    var fbRestName = snapshot.val().restName
+    var divTag = $("<div>").attr("class", "p-2 border-bottom")
+    var pTag = $("<p>").text(fbType).attr("class", "mb-0")
+    var aTag = $("<a>").attr("target", "_blank").attr("class", "searchHistory");
+    var fbRecipeName = snapshot.val().recipeName
+    var fbRecipeLink = snapshot.val().recipeLink
+
+    if (fbType === "Restaurant") {
+        aTag.attr("href", fbRestLink).text(fbRestName);
+    }
+
+    if (fbType === "Recipe") {
+        aTag.attr("href", fbRecipeLink).text(fbRecipeName);
+    }
+
+    divTag.append(pTag, aTag)
+    $("#history-display").prepend(divTag);
+});
+
