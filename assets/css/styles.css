@@ -22,27 +22,30 @@ width: 33%;
     background-color: #007bff!important;
     margin-bottom: 10px; 
 }
-
 .navbar-dark .navbar-brand {
     color: #fff;
-    font-weight: 200;
-   
+    font-weight: 200;  
 }
 .displayRestaurant{
     border-bottom: 1px solid lightgray;
     /* margin-bottom:10px;
     padding-left:10px; */
 }
-
-.displayRestaurant:hover{cursor: pointer;background-color: 	#007bff;color:white;}
-
-.searchHistory {
-    margin-bottom: 10px;
-    display: inline-block;
+.displayRestaurant:hover{
+    cursor: pointer;
+    background-color: #007bff;
+    color:white;
 }
 
-/* ------------------------------------------- */
-
-.card {
+@media screen and (max-width: 575px) {
+ .card {
     width: 100%;
+    height: auto
+ }
+ .card-deck {
+    display: flex;
+    justify-content: flex-start;
+    flex-flow: row wrap; 
+    align-items: stretch;
+ }
 }
